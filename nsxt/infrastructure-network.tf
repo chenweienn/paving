@@ -42,7 +42,8 @@ Router. Provisioned by Terraform."
   }
 }
 
-resource "nsxt_logical_switch" "ls_infrastructure" {                                                         display_name = "${var.environment_name}-LogicalSwitch-Infrastructure"
+resource "nsxt_logical_switch" "ls_infrastructure" {
+  display_name = "${var.environment_name}-LogicalSwitch-Infrastructure"
 
   transport_zone_id = data.nsxt_transport_zone.east-west-overlay.id
   admin_state       = "UP"

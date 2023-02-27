@@ -36,7 +36,7 @@ variable "external_ip_pool_cidr" {
 }
 
 variable "external_ip_pool_ranges" {
-  description = "The IP Ranges for the External IP Pool. Each PAS Org will draw an IP address from this pool; make sure you have enough, e.g. `[\"10.195.74.128-10.195.74.250\"]`"
+  description = "The IP Ranges for the External IP Pool. Each TAS Org will draw an IP address from this pool; make sure you have enough, e.g. `[\"10.195.74.128-10.195.74.250\"]`"
   type        = list(string)
 }
 
