@@ -41,7 +41,8 @@ resource "nsxt_logical_router_link_port_on_tier1" "t1_deployment_to_t0" {
   }
 }
 
-resource "nsxt_logical_switch" "ls_deployment" {                                                            display_name = "${var.environment_name}-LogicalSwitch-Deployment"
+resource "nsxt_logical_switch" "ls_deployment" {
+  display_name = "${var.environment_name}-LogicalSwitch-Deployment"
 
   transport_zone_id = data.nsxt_transport_zone.east-west-overlay.id
   admin_state       = "UP"

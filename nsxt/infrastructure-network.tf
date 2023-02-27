@@ -31,8 +31,7 @@ resource "nsxt_logical_tier1_router" "t1_infrastructure" {
 resource "nsxt_logical_router_link_port_on_tier1" "t1_infrastructure_to_t0" {
   display_name = "${var.environment_name}-T1-Infrastructure-to-T0"
 
-  description                   = "Link Port on Infrastructure Tier-1 Router connecting to Logical Tier-0
-Router. Provisioned by Terraform."
+  description                   = "Link Port on Infrastructure Tier-1 Router connecting to Logical Tier-0 Router. Provisioned by Terraform."
   logical_router_id             = nsxt_logical_tier1_router.t1_infrastructure.id
   linked_logical_router_port_id = nsxt_logical_router_link_port_on_tier0.t0_to_t1_infrastructure.id
 
