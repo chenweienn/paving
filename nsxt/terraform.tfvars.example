@@ -4,8 +4,7 @@ nsxt_host = "nsxmgr.domain.tld"
 
 environment_name = "environment_name" # An identifier used to tag resources; examples: dev, EMEA, prod
 east_west_transport_zone_name = "overlay-tz"
-
-# Routers
+nsxt_t0_router_name = "t0-router"
 nsxt_edge_cluster_name = "edge-cluster-1"
 nat_gateway_ip = "10.195.74.251"
 ops_manager_public_ip = "10.195.74.16"

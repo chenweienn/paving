@@ -13,9 +13,6 @@ variable "nsxt_password" {
   type        = string
 }
 
-variable "nsxt_ca_cert" {
-  type    = string
-}
 
 variable "allow_unverified_ssl" {
   default     = false
@@ -60,12 +57,7 @@ variable "nsxt_t0_router_name" {
 }
 
 variable "nat_gateway_ip" {
-  description = "The IP Address of the SNAT rule for egress traffic from the Infra & Deployment subnets; should be in the same subnet as the external IP pool, but not in the range of available IP addresses, e.g. `10.195.74.17`"
-  type        = string
-}
-
-variable "ops_manager_public_ip" {
-  description = "The public IP Address of the Operations Manager. The om's DNS (e.g. `om.system.tld`) should resolve to this IP, e.g. `10.195.74.16`"
+  description = "The IP Address of the SNAT rule for egress traffic from the Infrastructure, Deployment, services subnets; should be in the same subnet as the external IP pool, but not in the range of available IP addresses, e.g. `10.195.74.17`"
   type        = string
 }
 
@@ -89,56 +81,13 @@ variable "nsxt_lb_ssh_virtual_server_ip_address" {
   type        = string
 }
 
-variable "vcenter_datacenter" {
-  type = string
-}
-
-variable "vcenter_datastore" {
-  type = string
-}
-
-variable "vcenter_host" {
-  type = string
-}
-
-variable "vcenter_username" {
-  type = string
-}
-
-variable "vcenter_password" {
-  type = string
-}
-
-variable "vcenter_resource_pool" {
-  type = string
-}
-
-variable "vcenter_cluster" {
-  type = string
-}
-
-variable "ops_manager_ntp" {
-  type = string
-}
-
-variable "ops_manager_netmask" {
-  type = string
-}
-
-variable "ops_manager_dns" {
-  type = string
-}
-
-variable "ops_manager_dns_servers" {
-  type = string
-}
-
-variable "ops_manager_folder" {
-  type = string
-  default = ""
+variable "ops_manager_public_ip" {
+  description = "The public IP Address of the Operations Manager. The om's DNS (e.g. `om.system.tld`) should resolve to this IP, e.g. `10.195.74.16`"
+  type        = string
 }
 
 variable "subnet_prefix" {
+  description = "The private /24 subnets of Infrastructure/Deployment/Services networks are allocated from \"subnet_prefix.0.0/16\""
   type = string
   default = "192.168"
 }
