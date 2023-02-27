@@ -17,9 +17,6 @@ locals {
     management_subnet_cidr               = "${var.subnet_prefix}.1.0/24"
     management_subnet_gateway            = "${var.subnet_prefix}.1.1"
     management_subnet_reserved_ip_ranges = "${var.subnet_prefix}.1.1-${var.subnet_prefix}.1.10"
-
-    allow_unverified_ssl      = var.allow_unverified_ssl
-    disable_ssl_verification  = !var.allow_unverified_ssl
   }
 }
 
