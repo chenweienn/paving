@@ -30,20 +30,7 @@ variable "east_west_transport_zone_name" {
   type        = string
 }
 
-variable "external_ip_pool_cidr" {
-  description = "The CIDR for the External IP Pool. Must be reachable from clients outside the foundation. Can be RFC1918 addresses (10.x, 172.16-31.x, 192.168.x), e.g. `10.195.74.0/24`"
-  type        = string
-}
 
-variable "external_ip_pool_ranges" {
-  description = "The IP Ranges for the External IP Pool. Each TAS Org will draw an IP address from this pool; make sure you have enough, e.g. `[\"10.195.74.128-10.195.74.250\"]`"
-  type        = list(string)
-}
-
-variable "external_ip_pool_gateway" {
-  description = "The gateway for the External IP Pool, e.g. `10.195.74.1`"
-  type        = string
-}
 
 variable "nsxt_edge_cluster_name" {
   description = "The name of the deployed Edge Cluster, e.g. `edge-cluster-1`"
