@@ -36,7 +36,7 @@ resource "nsxt_lb_service" "tas_lb" {
 
   enabled           = true
   error_log_level   = "ERROR"
-  logical_router_id = nsxt_policy_tier1_gateway.tas-deployment-t1-gw.id
+  logical_router_id = data.nsxt_logical_tier1_router.mirrored_deployment_t1_router.id
   size              = "SMALL"
   virtual_server_ids = [
     nsxt_lb_tcp_virtual_server.lb_web_virtual_server.id,
