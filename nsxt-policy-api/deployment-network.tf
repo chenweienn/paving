@@ -27,6 +27,6 @@ resource "nsxt_policy_nat_rule" "tas-deployment-snat" {
   logging             = false
   source_networks     = [var.tas_deployment_cidr]
   translated_networks = [var.tas_deployment_nat_gateway_ip]
-  firewall_match      = BYPASS
+  firewall_match      = "BYPASS"
   rule_priority       = 1000
 }
