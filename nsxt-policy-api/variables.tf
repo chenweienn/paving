@@ -100,14 +100,14 @@ variable "tas_lb_ssh_virtual_server_ip_address" {
     type        = string
 }
 
-variable "use_ncp_container_networking" {
-    description = "Set to true if you plan to use the Network Container Plugin (NCP) for TAS container networking."
+variable "create_external_snat_ip_pool" {
+    description = "Set to true to configure an SNAT IP pool for TAS orgs (1 IP allocated for each TAS org)."
     type        = bool
     default     = true
 }
 
-variable "tas_ncp_external_snat_ip_pool_cidr" {
-    description = "CIDR range for the IP pool that provides 1 public IP for each CF org"
+variable "tas_orgs_external_snat_ip_pool_cidr" {
+    description = "CIDR range for the IP pool that provides 1 public IP for each TAS org"
     type        = string
 }
 
@@ -122,6 +122,6 @@ variable "tas_orgs_external_snat_ip_pool_stop" {
 }
 
 variable "tas_container_ip_block_cidr" {
-    description = "IP block for CF orgs. Subnets will be carved from this block for each org."
+    description = "IP block for TAS orgs. Subnets will be carved from this block for each org."
     type        = string
 }

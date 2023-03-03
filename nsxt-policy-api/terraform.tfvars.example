@@ -29,8 +29,8 @@ tas_lb_ssh_virtual_server_ip_address = "12.10.10.95"
 tas_lb_tcp_virtual_server_ports = ["34000-35000"]
 
 # If using NCP..
-use_ncp_container_networking = false
-tas_ncp_external_snat_ip_pool_cidr = "10.10.10.0/24"
+create_external_snat_ip_pool = true
+tas_orgs_external_snat_ip_pool_cidr = "10.10.10.0/24"
 tas_orgs_external_snat_ip_pool_start = "10.10.10.10"
 tas_orgs_external_snat_ip_pool_stop = "10.10.10.250"
 tas_container_ip_block_cidr = "172.16.0.0/14"
