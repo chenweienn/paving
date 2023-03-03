@@ -107,21 +107,21 @@ variable "create_external_snat_ip_pool" {
 }
 
 variable "tas_orgs_external_snat_ip_pool_cidr" {
-    description = "CIDR range for the IP pool that provides 1 public IP for each TAS org"
+    description = "CIDR range for the IP pool that provides 1 SNAT IP for each TAS org's app container egress traffic."
     type        = string
 }
 
 variable "tas_orgs_external_snat_ip_pool_start" {
-    description = "Starting IP for allocating SNAT IPs from the TAS external SNAT IP pool"
+    description = "Starting IP for allocating SNAT IPs from the TAS external SNAT IP pool subnet."
     type        = string
 }
 
 variable "tas_orgs_external_snat_ip_pool_stop" {
-    description = "Ending IP for allocating SNAT IPs from the TAS external SNAT IP pool"
+    description = "Ending IP for allocating SNAT IPs from the TAS external SNAT IP pool subnet."
     type        = string
 }
 
 variable "tas_container_ip_block_cidr" {
-    description = "IP block for TAS orgs. Subnets will be carved from this block for each org."
+    description = "IP block for app container IP address in TAS orgs. Subnets will be carved from this block for each org."
     type        = string
 }
