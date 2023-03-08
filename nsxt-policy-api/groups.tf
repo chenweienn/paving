@@ -9,7 +9,7 @@ resource "nsxt_policy_group" "tas_gorouter" {
 }
 
 resource "nsxt_policy_group" "tas_tcp_router" {
-  display_name = "tas-tcp_router"
+  display_name = "tas-tcp-router"
   description  = "TAS TCP router VMs"
 
   tag {

@@ -5,6 +5,11 @@ resource "nsxt_policy_lb_service" "tas-lb-service" {
     size              = "SMALL"
     enabled           = true
     error_log_level   = "ERROR"
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_pool" "tas-web-pool" {
@@ -21,6 +26,11 @@ resource "nsxt_policy_lb_pool" "tas-web-pool" {
         type = "IPPOOL"
         ip_pool_addresses = [var.tas_lb_web_virtual_server_ip_address]
     }
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_pool" "tas-tcp-pool" {
@@ -37,6 +47,11 @@ resource "nsxt_policy_lb_pool" "tas-tcp-pool" {
         type = "IPPOOL"
         ip_pool_addresses = [var.tas_lb_tcp_virtual_server_ip_address]
     }
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_pool" "tas-ssh-pool" {
@@ -53,6 +68,11 @@ resource "nsxt_policy_lb_pool" "tas-ssh-pool" {
         type = "IPPOOL"
         ip_pool_addresses = [var.tas_lb_ssh_virtual_server_ip_address]
     }
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_virtual_server" "tas-web-virtualserver" {
@@ -66,6 +86,11 @@ resource "nsxt_policy_lb_virtual_server" "tas-web-virtualserver" {
   default_pool_member_ports = ["443"]
   service_path              = nsxt_policy_lb_service.tas-lb-service.path
   pool_path                 = nsxt_policy_lb_pool.tas-web-pool.path
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_virtual_server" "tas-tcp-virtualserver" {
@@ -79,6 +104,11 @@ resource "nsxt_policy_lb_virtual_server" "tas-tcp-virtualserver" {
   default_pool_member_ports = var.tas_lb_tcp_virtual_server_ports
   service_path              = nsxt_policy_lb_service.tas-lb-service.path
   pool_path                 = nsxt_policy_lb_pool.tas-tcp-pool.path
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
 
 resource "nsxt_policy_lb_virtual_server" "tas-ssh-virtualserver" {
@@ -92,4 +122,9 @@ resource "nsxt_policy_lb_virtual_server" "tas-ssh-virtualserver" {
   default_pool_member_ports = ["2222"]
   service_path              = nsxt_policy_lb_service.tas-lb-service.path
   pool_path                 = nsxt_policy_lb_pool.tas-ssh-pool.path
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
 }
