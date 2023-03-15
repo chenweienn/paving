@@ -1,5 +1,5 @@
-resource "nsxt_policy_ip_pool" "tas_orgs_external_snat_ip_pool" {
-  display_name = "tas-orgs-external-snat-ip-pool"
+resource "nsxt_policy_ip_pool" "external_snat_ip_pool" {
+  display_name = "external-snat-ip-pool"
   description  = "Subnets are allocated from this pool for SNAT IPs of TAS orgs"
   count        = var.create_external_snat_ip_pool ? 1 : 0
 
@@ -9,16 +9,16 @@ resource "nsxt_policy_ip_pool" "tas_orgs_external_snat_ip_pool" {
   }
 }
 
-resource "nsxt_policy_ip_pool_static_subnet" "tas_orgs_external_snat_ip_pool" {
+resource "nsxt_policy_ip_pool_static_subnet" "tas_orgs_external_snat_ip_subnet" {
   display_name = "tas-orgs-external-ip-pool-static-subnet"
   description  = "Static IP pool subnet of external SNAT IPs (1 IP for each TAS org)"
-  pool_path    = nsxt_policy_ip_pool.tas_orgs_external_snat_ip_pool[count.index].path
-  cidr         = var.tas_orgs_external_snat_ip_pool_cidr
+  pool_path    = nsxt_policy_ip_pool.external_snat_ip_pool[count.index].path
+  cidr         = var.external_snat_ip_pool_cidr
   count        = var.create_external_snat_ip_pool ? 1 : 0
 
   allocation_range {
-    start = var.tas_orgs_external_snat_ip_pool_start
-    end   = var.tas_orgs_external_snat_ip_pool_stop
+    start = var.tas_orgs_external_snat_ip_subnet_start
+    end   = var.tas_orgs_external_snat_ip_subnet_stop
   }
 
   tag {

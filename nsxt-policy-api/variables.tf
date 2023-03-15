@@ -106,18 +106,18 @@ variable "create_external_snat_ip_pool" {
     default     = true
 }
 
-variable "tas_orgs_external_snat_ip_pool_cidr" {
-    description = "CIDR range for the IP pool that provides 1 SNAT IP for each TAS org's app container egress traffic."
+variable "external_snat_ip_pool_cidr" {
+    description = "CIDR range for the IP pool that provides SNAT IPs for the egress traffic from the workload managed by NSX-T."
     type        = string
 }
 
-variable "tas_orgs_external_snat_ip_pool_start" {
-    description = "Starting IP for allocating SNAT IPs from the TAS external SNAT IP pool subnet."
+variable "tas_orgs_external_snat_ip_subnet_start" {
+    description = "Starting IP for allocating SNAT IPs from the external SNAT IP pool subnet."
     type        = string
 }
 
-variable "tas_orgs_external_snat_ip_pool_stop" {
-    description = "Ending IP for allocating SNAT IPs from the TAS external SNAT IP pool subnet."
+variable "tas_orgs_external_snat_ip_subnet_stop" {
+    description = "Ending IP for allocating SNAT IPs from the external SNAT IP pool subnet."
     type        = string
 }
 

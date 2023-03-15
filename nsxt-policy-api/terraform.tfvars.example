@@ -31,9 +31,9 @@ tas_lb_tcp_virtual_server_ports = ["34000-35000"]
 # define a SNAT IP pool and a static range (<start>-<stop>)
 # 1 IP would be allocated from this static range for each TAS org as the SNAT IP for the egress traffic from this org
 create_external_snat_ip_pool = true
-tas_orgs_external_snat_ip_pool_cidr = "12.10.10.0/24"
-tas_orgs_external_snat_ip_pool_start = "12.10.10.101"
-tas_orgs_external_snat_ip_pool_stop = "12.10.10.200"
+external_snat_ip_pool_cidr = "12.10.10.0/24"
+tas_orgs_external_snat_ip_subnet_start = "12.10.10.101"
+tas_orgs_external_snat_ip_subnet_stop = "12.10.10.200"
 
 # IP Blocks of App Container Networks
 tas_container_ip_block_cidr = "172.16.0.0/14"
