@@ -23,8 +23,7 @@ resource "nsxt_policy_lb_pool" "tas-web-pool" {
     }
 
     snat {
-        type = "IPPOOL"
-        ip_pool_addresses = [var.tas_lb_web_virtual_server_ip_address]
+        type = "AUTOMAP"
     }
 
   tag {
@@ -44,8 +43,7 @@ resource "nsxt_policy_lb_pool" "tas-tcp-pool" {
     }
 
     snat {
-        type = "IPPOOL"
-        ip_pool_addresses = [var.tas_lb_tcp_virtual_server_ip_address]
+        type = "DISABLED"
     }
 
   tag {
@@ -65,8 +63,7 @@ resource "nsxt_policy_lb_pool" "tas-ssh-pool" {
     }
 
     snat {
-        type = "IPPOOL"
-        ip_pool_addresses = [var.tas_lb_ssh_virtual_server_ip_address]
+        type = "DISABLED"
     }
 
   tag {
