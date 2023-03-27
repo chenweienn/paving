@@ -33,7 +33,7 @@ resource "nsxt_policy_nat_rule" "tas-deployment-snat" {
   display_name        = "tas-deployment-snat"
   description         = "SNAT rule for all VMs in the TAS deployment network"
   action              = "SNAT"
-  gateway_path        = nsxt_policy_tier1_gateway.tas-deployment-t1-gw.path
+  gateway_path        = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
   logging             = false
   source_networks     = [var.tas_deployment_cidr]
   translated_networks = [var.tas_deployment_nat_gateway_ip]

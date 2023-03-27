@@ -35,7 +35,7 @@ resource "nsxt_policy_nat_rule" "ops-manager-snat" {
   action              = "SNAT"
   source_networks     = ["${var.tas_ops_manager_private_ip}"]
   translated_networks = [var.tas_ops_manager_public_ip]
-  gateway_path        = nsxt_policy_tier1_gateway.tas-infra-t1-gw.path
+  gateway_path        = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
   firewall_match      = "BYPASS"
   rule_priority       = 100
   logging             = false
@@ -52,7 +52,7 @@ resource "nsxt_policy_nat_rule" "ops-manager-dnat" {
   action               = "DNAT"
   translated_networks  = ["${var.tas_ops_manager_private_ip}"]
   destination_networks = [var.tas_ops_manager_public_ip]
-  gateway_path         = nsxt_policy_tier1_gateway.tas-infra-t1-gw.path
+  gateway_path         = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
   firewall_match       = "BYPASS"
   rule_priority        = 100
   logging              = false
@@ -67,7 +67,7 @@ resource "nsxt_policy_nat_rule" "tas-infra-snat" {
   display_name        = "tas-infra-snat"
   description         = "SNAT rule for all VMs in the TAS infrastructure network"
   action              = "SNAT"
-  gateway_path        = nsxt_policy_tier1_gateway.tas-infra-t1-gw.path
+  gateway_path        = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
   logging             = false
   source_networks     = [var.tas_infra_cidr]
   translated_networks = [var.tas_infrastructure_nat_gateway_ip]
