@@ -63,6 +63,40 @@ resource "nsxt_policy_nat_rule" "ops-manager-dnat" {
   }
 }
 
+resource "nsxt_policy_nat_rule" "bosh-director-snat" {
+  display_name        = "bosh-director-snat"
+  description         = "SNAT rule for BOSH director egress"
+  action              = "SNAT"
+  source_networks     = ["${var.bosh_director_private_ip}"]
+  translated_networks = [var.bosh_director_public_ip]
+  gateway_path        = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
+  firewall_match      = "BYPASS"
+  rule_priority       = 100
+  logging             = false
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
+}
+
+resource "nsxt_policy_nat_rule" "bosh-director-dnat" {
+  display_name         = "bosh-director-dnat"
+  description          = "DNAT rule for BOSH director ingress"
+  action               = "DNAT"
+  translated_networks  = ["${var.bosh_director_private_ip}"]
+  destination_networks = [var.bosh_director_public_ip]
+  gateway_path         = data.nsxt_policy_tier0_gateway.nsxt_active_t0_gateway.path
+  firewall_match       = "BYPASS"
+  rule_priority        = 100
+  logging              = false
+
+  tag {
+    tag = "created_by"
+    scope = "terraform"
+  }
+}
+
 resource "nsxt_policy_nat_rule" "tas-infra-snat" {
   display_name        = "tas-infra-snat"
   description         = "SNAT rule for all VMs in the TAS infrastructure network"

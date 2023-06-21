@@ -76,7 +76,18 @@ variable "tas_ops_manager_public_ip" {
 }
 
 variable "tas_ops_manager_private_ip" {
-  description = "The private (NAT) IP address to use for Operations Manager. Must be in the tas_infrastructure_cidr range"
+  description = "The private IP address to use for Operations Manager. Must be in the tas_infra_cidr range"
+  type        = string
+}
+
+
+variable "bosh_director_public_ip" {
+  description = "The public IP address to use for BOSH director"
+  type        = string
+}
+
+variable "bosh_director_private_ip" {
+  description = "The private IP address to use for BOSH director. Must be in the tas_infra_cidr range. If you reserve e.g., 192.168.1.1-10 from tas_infra_cidr when defining the networks in Ops Manager UI - BOSH tile, BOSH director would be allocated with IP 192.168.1.11."
   type        = string
 }
 

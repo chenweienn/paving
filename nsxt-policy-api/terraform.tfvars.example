@@ -22,6 +22,9 @@ tas_services_nat_gateway_ip = "12.10.10.92"
 tas_ops_manager_public_ip = "12.10.10.10"
 tas_ops_manager_private_ip = "192.168.1.10"
 
+bosh_director_public_ip = "12.10.10.11"
+bosh_director_private_ip = "192.168.1.11"
+
 tas_lb_web_virtual_server_ip_address = "12.10.10.93"
 tas_lb_tcp_virtual_server_ip_address = "12.10.10.94"
 tas_lb_ssh_virtual_server_ip_address = "12.10.10.95"
