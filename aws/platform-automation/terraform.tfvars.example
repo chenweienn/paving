@@ -1,0 +1,26 @@
+environment_name = "plat-auto"
+tags = { "created_by" = "Weien_Chen", "managed_by" = "Terraform", "Tanzu_Env" = "Plat_Auto" }
+
+region = "us-east-1"
+availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+
+hosted_zone = "tas-poc.com"
+vpc_cidr = "10.0.0.0/24"
+infra_subnet_cidrs      = ["10.0.0.0/27", "10.0.0.32/27", "10.0.0.64/27"]
+management_subnet_cidrs = ["10.0.0.128/27", "10.0.0.160/27", "10.0.0.192/27"]
+
+# who can communicate with Ops Manager
+ops_manager_allowed_ips = ["0.0.0.0/0"]
+
+# concourse RDS DB options
+concourse_rds_engine = "postgres"
+concourse_rds_engine_version = "15.5"
+concourse_rds_identifier = "concourse-db"
+concourse_rds_instance_class = "db.t3.medium"
+concourse_rds_allocated_storage = 20
+concourse_rds_max_allocated_storage = 40
+concourse_rds_multi_az = false
+concourse_rds_publicly_accessible = false
+concourse_rds_storage_type = "gp3"
+#concourse_rds_storage_throughput = 
+concourse_rds_port = 5432
