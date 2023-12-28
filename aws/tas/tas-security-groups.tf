@@ -22,6 +22,7 @@ resource "aws_security_group" "web_lb_sg" {
     from_port   = 0
     to_port     = 0
   }
+  tags = { "Name" = "${var.environment_name}-web-lb-sg" }
 }
 
 resource "aws_security_group" "ssh_lb_sg" {
@@ -41,6 +42,7 @@ resource "aws_security_group" "ssh_lb_sg" {
     from_port   = 0
     to_port     = 0
   }
+  tags = { "Name" = "${var.environment_name}-ssh-lb-sg" }
 }
 
 resource "aws_security_group" "tcp_lb_sg" {
@@ -60,6 +62,7 @@ resource "aws_security_group" "tcp_lb_sg" {
     from_port   = 0
     to_port     = 0
   }
+  tags = { "Name" = "${var.environment_name}-tcp-lb-sg" }
 }
 
 resource "aws_security_group" "tas_db_sg" {
@@ -79,4 +82,5 @@ resource "aws_security_group" "tas_db_sg" {
     from_port   = 0
     to_port     = 0
   }
+  tags = { "Name" = "${var.environment_name}-tas-db-sg" }
 }
