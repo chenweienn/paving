@@ -29,10 +29,12 @@ resource "aws_security_group" "concourse_lb_sg" {
     from_port   = 0
     to_port     = 0
   }
+
+  tags = { "Name" = "${var.environment_name}-concourse-lb-sg" }
 }
 
 resource "aws_security_group" "concourse_db_sg" {
-  name   = "${var.environment_name}-concourse_db-sg"
+  name   = "${var.environment_name}-concourse-db-sg"
   vpc_id = aws_vpc.vpc.id
 
   ingress {
@@ -48,4 +50,6 @@ resource "aws_security_group" "concourse_db_sg" {
     from_port   = 0
     to_port     = 0
   }
+
+  tags = { "Name" = "${var.environment_name}-concourse-db-sg" }
 }
