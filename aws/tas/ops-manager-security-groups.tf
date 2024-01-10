@@ -1,5 +1,5 @@
-resource "aws_security_group" "nat" {
-  name   = "${var.environment_name}-nat-sg"
+resource "aws_security_group" "allow_vpc" {
+  name   = "${var.environment_name}-allow-vpc-sg"
   vpc_id = aws_vpc.vpc.id
 
   ingress {
@@ -16,7 +16,7 @@ resource "aws_security_group" "nat" {
     to_port     = 0
   }
 
-  tags = { "Name" = "${var.environment_name}-nat-sg" }
+  tags = { "Name" = "${var.environment_name}-allow-vpc-sg" }
 }
 
 resource "aws_security_group" "ops-manager" {

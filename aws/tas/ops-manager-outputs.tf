@@ -35,13 +35,14 @@ locals {
     platform_vms_security_group_id   = aws_security_group.platform.id
     platform_vms_security_group_name = aws_security_group.platform.name
 
-    nat_security_group_id   = aws_security_group.nat.id
-    nat_security_group_name = aws_security_group.nat.name
+    allow_vpc_security_group_id   = aws_security_group.allow_vpc.id
+    allow_vpc_security_group_name = aws_security_group.allow_vpc.name
 
     #ssl_certificate = var.ssl_certificate
     #ssl_private_key = var.ssl_private_key
 
-    bosh_bucket                    = aws_s3_bucket.bosh-bucket.bucket
+    bosh_bucket                           = aws_s3_bucket.bosh-bucket.bucket
+    vpc_s3_endpoint                       = replace(aws_vpc_endpoint.s3.dns_entry[0]["dns_name"],"*","bucket")
   }
 }
 
