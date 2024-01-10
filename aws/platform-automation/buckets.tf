@@ -1,9 +1,9 @@
-resource "aws_s3_bucket" "ops-manager-bucket" {
-  bucket = "${var.environment_name}-ops-manager-bucket"
+resource "aws_s3_bucket" "bosh-bucket" {
+  bucket = "${var.environment_name}-bosh-bucket"
 }
 
-resource "aws_s3_bucket_versioning" "ops-manager-bucket" {
-  bucket = aws_s3_bucket.ops-manager-bucket.id
+resource "aws_s3_bucket_versioning" "bosh-bucket" {
+  bucket = aws_s3_bucket.bosh-bucket.id
   versioning_configuration {
     status = "Enabled"
   }
@@ -19,8 +19,8 @@ resource "aws_kms_alias" "s3-encryption-key-alias" {
   target_key_id = aws_kms_key.s3-encryption-key.key_id
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "ops-manager-bucket-encryption" {
-  bucket = aws_s3_bucket.ops-manager-bucket.id
+resource "aws_s3_bucket_server_side_encryption_configuration" "bosh-bucket-encryption" {
+  bucket = aws_s3_bucket.bosh-bucket.id
 
   rule {
     apply_server_side_encryption_by_default {

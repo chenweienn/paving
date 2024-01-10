@@ -27,7 +27,6 @@ locals {
     ops_manager_key_pair_name             = aws_key_pair.ops-manager.key_name
     ops_manager_ssh_public_key            = tls_private_key.ops-manager.public_key_openssh
     ops_manager_ssh_private_key           = tls_private_key.ops-manager.private_key_pem
-    ops_manager_bucket                    = aws_s3_bucket.ops-manager-bucket.bucket
     ops_manager_security_group_id         = aws_security_group.ops-manager.id
     ops_manager_security_group_name       = aws_security_group.ops-manager.name
 
@@ -39,6 +38,8 @@ locals {
 
     #ssl_certificate = var.ssl_certificate
     #ssl_private_key = var.ssl_private_key
+
+    bosh_bucket                           = aws_s3_bucket.bosh-bucket.bucket
   }
 }
 
