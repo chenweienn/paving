@@ -35,7 +35,7 @@ resource "aws_route53_record" "ssh" {
 }
 
 resource "aws_route53_record" "tcp" {
-  name = "tcp.${var.environment_name}.${data.aws_route53_zone.hosted.name}"
+  name = "tcp.sys.${var.environment_name}.${data.aws_route53_zone.hosted.name}"
   zone_id = data.aws_route53_zone.hosted.zone_id
   type    = "A"
 
