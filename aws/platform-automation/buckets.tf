@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bosh-bucket" {
-  bucket = "${var.environment_name}-bosh-bucket"
+  bucket_prefix = "${var.environment_name}-bosh-bucket-"
 }
 
 resource "aws_s3_bucket_versioning" "bosh-bucket" {

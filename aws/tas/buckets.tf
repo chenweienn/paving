@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bosh-bucket" {
-  bucket = "${var.environment_name}-bosh-bucket"
+  bucket_prefix = "${var.environment_name}-bosh-bucket-"
 }
 
 resource "aws_s3_bucket_versioning" "bosh-bucket" {
@@ -43,7 +43,7 @@ locals {
 resource "aws_s3_bucket" "buckets" {
   for_each = local.tas_buckets
 
-  bucket = "${var.environment_name}-${each.key}-bucket"
+  bucket_prefix = "${var.environment_name}-${each.key}-"
 }
 
 resource "aws_s3_bucket_versioning" "buckets_versioning" {
