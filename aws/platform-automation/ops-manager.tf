@@ -195,6 +195,27 @@ data "aws_iam_policy_document" "ops-manager" {
     resources = ["*"]
   }
 
+  statement {
+    sid    = "ASMListPermissions"
+    effect = "Allow"
+    actions = [
+      "secretsmanager:ListSecrets",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "ASMGetPermissions"
+    effect = "Allow"
+    actions = [
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+    ]
+    resources = [
+      "arn:aws:secretsmanager:*:*:secret:/concourse/*",
+      "arn:aws:secretsmanager:*:*:secret:__concourse-health-check-??????",
+    ]
+  }
 }
 
 
