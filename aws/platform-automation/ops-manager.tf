@@ -179,7 +179,8 @@ data "aws_iam_policy_document" "ops-manager" {
       "kms:ReEncrypt*",
       "kms:GenerateDataKey*",
       "kms:CreateGrant",
-      "kms:DescribeKey*"
+      "kms:DescribeKey*",
+      "kms:Decrypt*"
     ]
     resources = ["*"]
   }
