@@ -14,6 +14,7 @@ locals {
     concourse_db_endpoint = aws_db_instance.concourse_db.endpoint
     concourse_db_username = aws_db_instance.concourse_db.username
     concourse_db_password = random_string.rds_password.result
+    concourse_db_ca_cert  = data.curl.rds_ca_cert.response
 
     concourse_db_security_group_id = aws_security_group.concourse_db_sg.id
     concourse_db_security_group_name = aws_security_group.concourse_db_sg.name
