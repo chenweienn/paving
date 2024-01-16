@@ -8,6 +8,8 @@ locals {
     vpc_cidr       = aws_vpc.vpc.cidr_block
     vpc_dns_server = cidrhost(aws_vpc.vpc.cidr_block, 2)
 
+    transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+
     infra_subnets = [
       for i in range(length(var.availability_zones)) :
         {

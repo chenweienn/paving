@@ -19,6 +19,13 @@ variable "vpc_id_2" {
   type = string
 }
 
+variable "tgw_id_1" {
+  type = string
+}
+variable "tgw_id_2" {
+  type = string
+}
+
 variable "vpc_attachment_subnet_ids_1" {
   type = list
 }
