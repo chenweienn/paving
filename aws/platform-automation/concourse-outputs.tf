@@ -20,6 +20,8 @@ locals {
     concourse_db_security_group_name = aws_security_group.concourse_db_sg.name
 
     concourse_dns = aws_route53_record.concourse.name
+
+    pivnet_bucket_name = aws_s3_bucket.pivnet-bucket.bucket
   }
 }
 
