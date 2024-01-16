@@ -1,17 +1,13 @@
+# Platform Automation environment
 environment_name_1 = "plat-auto"
 region_1 = "us-east-1"
 tags_1 = { "created_by" = "Weien_Chen", "managed_by" = "Terraform", "Tanzu_Env" = "Plat_Auto" }
 vpc_id_1 = "vpc-009c4092419f42ebe"
-vpc_attachment_subnet_ids_1 = [
-    "subnet-07393ac72c9f5e070",
-    "subnet-0676f9f5f397e2015",
-    "subnet-08d4714a14ddc6ed6" ]
+tgw_id_1 = "tgw-02e586cd62a52ef8e"
 
-environment_name_2 = "sbx-w"
+# TAS environment to connect with Platform Automation
+environment_name_2 = "tas-sandbox"
 region_2 = "eu-north-1"
 tags_2 = { "created_by" = "Weien_Chen", "managed_by" = "Terraform", "Tanzu_Env" = "TAS_Sandbox" }
 vpc_id_2 = "vpc-0fea65110c59ecbe4"
-vpc_attachment_subnet_ids_2 = [
-    "subnet-0d4fe522255410bd2",
-    "subnet-02a10095b6ebd98a6",
-    "subnet-05c4158eb2c096fed"]
+tgw_id_2 = "tgw-0cf6e76dd01f28e7b"

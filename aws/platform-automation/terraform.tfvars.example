@@ -4,7 +4,7 @@ tags = { "created_by" = "Weien_Chen", "managed_by" = "Terraform", "Tanzu_Env" = 
 region = "us-east-1"
 availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
-hosted_zone = "tas-poc.com"
+hosted_zone = "example.com"
 vpc_cidr = "10.0.0.0/24"
 infra_subnet_cidrs      = ["10.0.0.0/27", "10.0.0.32/27", "10.0.0.64/27"]
 management_subnet_cidrs = ["10.0.0.128/27", "10.0.0.160/27", "10.0.0.192/27"]
