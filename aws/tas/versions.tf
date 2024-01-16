@@ -10,6 +10,9 @@ terraform {
     tls = {
       source = "hashicorp/tls"
     }
+    curl = {
+      source  = "anschoewe/curl"
+    }
   }
   required_version = "~> 1.0"
 }

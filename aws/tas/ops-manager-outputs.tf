@@ -6,18 +6,25 @@ locals {
 
     vpc_id = aws_vpc.vpc.id
 
-    infra_subnet_ids   = aws_subnet.infra-subnet[*].id
-    infra_subnet_cidrs = aws_subnet.infra-subnet[*].cidr_block
-
-    management_subnet_ids   = aws_subnet.management-subnet[*].id
-    management_subnet_cidrs = aws_subnet.management-subnet[*].cidr_block
-    management_subnet_gateways = [
+    infra_subnets = [
       for i in range(length(var.availability_zones)) :
-      cidrhost(aws_subnet.management-subnet[i].cidr_block, 1)
+        {
+          subnet_id                = aws_subnet.infra-subnet[i].id
+          subnet_cidr              = aws_subnet.infra-subnet[i].cidr_block
+          subnet_gateway           = cidrhost(aws_subnet.management-subnet[i].cidr_block, 1)
+          subnet_az                = aws_subnet.management-subnet[i].availability_zone
+        }
     ]
-    management_subnet_reserved_ip_ranges = [
+
+    management_subnets = [
       for i in range(length(var.availability_zones)) :
-      "${cidrhost(aws_subnet.management-subnet[i].cidr_block, 1)}-${cidrhost(aws_subnet.management-subnet[i].cidr_block, 9)}"
+        {
+          subnet_id                = aws_subnet.management-subnet[i].id
+          subnet_cidr              = aws_subnet.management-subnet[i].cidr_block
+          subnet_reserved_ip_range = "${cidrhost(aws_subnet.management-subnet[i].cidr_block, 0)}-${cidrhost(aws_subnet.management-subnet[i].cidr_block, 9)}"
+          subnet_gateway           = cidrhost(aws_subnet.management-subnet[i].cidr_block, 1)
+          subnet_az                = aws_subnet.management-subnet[i].availability_zone
+        }
     ]
 
     ops_manager_subnet_id                 = aws_subnet.management-subnet[0].id

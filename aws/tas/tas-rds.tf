@@ -28,3 +28,10 @@ resource "aws_db_instance" "tas_db" {
   port                       = var.tas_rds_port
   vpc_security_group_ids     = [aws_security_group.tas_db_sg.id]
 }
+
+provider "curl" {}
+
+data "curl" "rds_ca_cert" {
+  http_method = "GET"
+  uri = "https://truststore.pki.rds.amazonaws.com/${var.region}/${var.region}-bundle.pem"
+}

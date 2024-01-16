@@ -1,25 +1,25 @@
 locals {
   stable_config_tas = {
-    tas_subnet_ids = aws_subnet.tas-subnet[*].id
-    tas_subnet_cidrs = aws_subnet.tas-subnet[*].cidr_block
-    tas_subnet_gateways = [
+    tas_subnets = [
       for i in range(length(var.availability_zones)) :
-      cidrhost(aws_subnet.tas-subnet[i].cidr_block, 1)
-    ]
-    tas_subnet_reserved_ip_ranges = [
-      for i in range(length(var.availability_zones)) :
-      "${cidrhost(aws_subnet.tas-subnet[i].cidr_block, 1)}-${cidrhost(aws_subnet.tas-subnet[i].cidr_block, 9)}"
+        {
+          subnet_id                = aws_subnet.tas-subnet[i].id
+          subnet_cidr              = aws_subnet.tas-subnet[i].cidr_block
+          subnet_reserved_ip_range = "${cidrhost(aws_subnet.tas-subnet[i].cidr_block, 0)}-${cidrhost(aws_subnet.tas-subnet[i].cidr_block, 9)}"
+          subnet_gateway           = cidrhost(aws_subnet.tas-subnet[i].cidr_block, 1)
+          subnet_az                = aws_subnet.tas-subnet[i].availability_zone
+        }
     ]
 
-    services_subnet_ids   = aws_subnet.services-subnet[*].id
-    services_subnet_cidrs = aws_subnet.services-subnet[*].cidr_block
-    services_subnet_gateways = [
+    services_subnets = [
       for i in range(length(var.availability_zones)) :
-      cidrhost(aws_subnet.services-subnet[i].cidr_block, 1)
-    ]
-    services_subnet_reserved_ip_ranges = [
-      for i in range(length(var.availability_zones)) :
-      "${cidrhost(aws_subnet.services-subnet[i].cidr_block, 1)}-${cidrhost(aws_subnet.services-subnet[i].cidr_block, 9)}"
+        {
+          subnet_id                = aws_subnet.services-subnet[i].id
+          subnet_cidr              = aws_subnet.services-subnet[i].cidr_block
+          subnet_reserved_ip_range = "${cidrhost(aws_subnet.services-subnet[i].cidr_block, 0)}-${cidrhost(aws_subnet.services-subnet[i].cidr_block, 9)}"
+          subnet_gateway           = cidrhost(aws_subnet.services-subnet[i].cidr_block, 1)
+          subnet_az                = aws_subnet.services-subnet[i].availability_zone
+        }
     ]
 
     buildpacks_bucket_name = aws_s3_bucket.buckets["buildpacks"].bucket
@@ -50,6 +50,7 @@ locals {
     tas_db_endpoint = aws_db_instance.tas_db.endpoint
     tas_db_username = aws_db_instance.tas_db.username
     tas_db_password = random_string.rds_password.result
+    tas_db_ca_cert  = data.curl.rds_ca_cert.response
 
     tas_db_security_group_id = aws_security_group.tas_db_sg.id
     tas_db_security_group_name = aws_security_group.tas_db_sg.name
