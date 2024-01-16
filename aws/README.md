@@ -1,3 +1,8 @@
+# Reference architecture
+
+![Reference_Architecture_Diagram](/assets/images/Reference_Architecture_Diagram.jpeg)
+
+
 # Usage
 
 in progress ...
