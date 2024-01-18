@@ -1,12 +1,15 @@
-resource "tls_private_key" "ops-manager" {
+# EC2 instancs SSH key
+
+resource "tls_private_key" "ssh_key" {
   algorithm = "RSA"
   rsa_bits  = "4096"
 }
 
-resource "aws_key_pair" "ops-manager" {
-  key_name   = "${var.environment_name}-ops-manager-key"
-  public_key = tls_private_key.ops-manager.public_key_openssh
+resource "aws_key_pair" "ssh_key" {
+  key_name   = "${var.environment_name}-ec2-ssh-key"
+  public_key = tls_private_key.ssh_key.public_key_openssh
 }
+
 
 data "aws_iam_policy_document" "ops-manager" {
   statement {
