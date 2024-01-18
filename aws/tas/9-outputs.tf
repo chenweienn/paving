@@ -76,11 +76,14 @@ locals {
 
     vpc_s3_endpoint        = replace(aws_vpc_endpoint.s3.dns_entry[0]["dns_name"],"*","bucket")
 
-    bosh_bucket            = aws_s3_bucket.bosh-bucket.bucket
-    buildpacks_bucket_name = aws_s3_bucket.buckets["buildpacks"].bucket
-    droplets_bucket_name   = aws_s3_bucket.buckets["droplets"].bucket
-    packages_bucket_name   = aws_s3_bucket.buckets["packages"].bucket
-    resources_bucket_name  = aws_s3_bucket.buckets["resources"].bucket
+    bosh_bucket            = aws_s3_bucket.buckets["bosh-bucket"].bucket
+    bbr_backups_bucket     = aws_s3_bucket.buckets["bbr-backups"].bucket
+    buildpacks_bucket      = aws_s3_bucket.buckets["buildpacks"].bucket
+    droplets_bucket        = aws_s3_bucket.buckets["droplets"].bucket
+    packages_bucket        = aws_s3_bucket.buckets["packages"].bucket
+    resources_bucket       = aws_s3_bucket.buckets["resources"].bucket
+
+    s3_encryption_key_id   = aws_kms_key.s3-encryption-key.key_id
 
     # tas_blobstore_iam_instance_profile_name = aws_iam_instance_profile.pas-blobstore.name
 
