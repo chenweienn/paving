@@ -1,7 +1,3 @@
-resource "aws_eip" "ops-manager" {
-  domain = "vpc"
-}
-
 resource "tls_private_key" "ops-manager" {
   algorithm = "RSA"
   rsa_bits  = "4096"
