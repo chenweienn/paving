@@ -1,4 +1,4 @@
-# EC2 instancs SSH key
+## EC2 instancs SSH key
 
 resource "tls_private_key" "ssh_key" {
   algorithm = "RSA"
@@ -10,6 +10,7 @@ resource "aws_key_pair" "ssh_key" {
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
+## IAM
 
 data "aws_iam_policy_document" "ops-manager" {
   statement {
@@ -24,7 +25,8 @@ data "aws_iam_policy_document" "ops-manager" {
     effect  = "Allow"
     actions = ["iam:PassRole"]
     resources = [
-      aws_iam_role.ops-manager.arn
+      aws_iam_role.ops-manager.arn,
+      aws_iam_role.tas-blobstore.arn
     ]
   }
 
@@ -196,13 +198,6 @@ data "aws_iam_policy_document" "ops-manager" {
 
 }
 
-
-resource "aws_iam_policy" "ops-manager-role" {
-  name   = "${var.environment_name}-ops-manager-role"
-  policy = data.aws_iam_policy_document.ops-manager.json
-}
-
-
 data "aws_iam_policy_document" "assume-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -214,16 +209,27 @@ data "aws_iam_policy_document" "assume-role-policy" {
   }
 }
 
-# when auth with AWS Instance Profile
+resource "aws_iam_policy" "ops-manager" {
+  name   = "${var.environment_name}-ops-manager-policy"
+  policy = data.aws_iam_policy_document.ops-manager.json
+}
+
+
+
+# Instance Profile to configure in Ops Manager
 
 resource "aws_iam_role" "ops-manager" {
   name = "${var.environment_name}-ops-manager-role"
+  assume_role_policy = data.aws_iam_policy_document.assume-role-policy.json
 
   lifecycle {
     create_before_destroy = true
   }
+}
 
-  assume_role_policy = data.aws_iam_policy_document.assume-role-policy.json
+resource "aws_iam_role_policy_attachment" "ops-manager" {
+  role       = aws_iam_role.ops-manager.name
+  policy_arn = aws_iam_policy.ops-manager.arn
 }
 
 resource "aws_iam_instance_profile" "ops-manager" {
@@ -235,13 +241,9 @@ resource "aws_iam_instance_profile" "ops-manager" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "ops-manager-policy" {
-  role       = aws_iam_role.ops-manager.name
-  policy_arn = aws_iam_policy.ops-manager-role.arn
-}
 
 
-# when auth with AWS Keys (access key and secret key)
+# IAM user Access Keys (access key and secret key) to configure in Ops Manager
 
 #resource "aws_iam_user" "ops-manager" {
 #  force_destroy = true
@@ -253,7 +255,57 @@ resource "aws_iam_role_policy_attachment" "ops-manager-policy" {
 #}
 #
 #resource "aws_iam_user_policy" "ops-manager" {
-#  name   = "${var.environment_name}-ops-manager-policy"
+#  name   = "${var.environment_name}-ops-manager-user-policy"
 #  user   = aws_iam_user.ops-manager.name
 #  policy = data.aws_iam_policy_document.ops-manager.json
 #}
+
+
+# Instance Profile to configure for TAS components
+#   https://docs.vmware.com/en/VMware-Tanzu-Application-Service/5.0/tas-for-vms/pas-file-storage.html
+
+data "aws_iam_policy_document" "tas-blobstore" {
+  statement {
+    sid     = "TasBlobstorePolicy"
+    effect  = "Allow"
+    actions = ["s3:*"]
+    resources = [
+      aws_s3_bucket.buckets["buildpacks"].arn,
+      "${aws_s3_bucket.buckets["buildpacks"].arn}/*",
+      aws_s3_bucket.buckets["packages"].arn,
+      "${aws_s3_bucket.buckets["packages"].arn}/*",
+      aws_s3_bucket.buckets["resources"].arn,
+      "${aws_s3_bucket.buckets["resources"].arn}/*",
+      aws_s3_bucket.buckets["droplets"].arn,
+      "${aws_s3_bucket.buckets["droplets"].arn}/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "tas-blobstore" {
+  name   = "${var.environment_name}-tas-blobstore-policy"
+  policy = data.aws_iam_policy_document.tas-blobstore.json
+}
+
+resource "aws_iam_role" "tas-blobstore" {
+  name = "${var.environment_name}-tas-blobstore-role"
+  assume_role_policy = data.aws_iam_policy_document.assume-role-policy.json
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "tas-blobstore" {
+  role       = aws_iam_role.tas-blobstore.name
+  policy_arn = aws_iam_policy.tas-blobstore.arn
+}
+
+resource "aws_iam_instance_profile" "tas-blobstore" {
+  name = "${var.environment_name}-tas-blobstore"
+  role = aws_iam_role.tas-blobstore.name
+
+  lifecycle {
+    ignore_changes = [name]
+  }
+}

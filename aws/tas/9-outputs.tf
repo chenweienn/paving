@@ -85,7 +85,7 @@ locals {
 
     s3_encryption_key_id   = aws_kms_key.s3-encryption-key.key_id
 
-    # tas_blobstore_iam_instance_profile_name = aws_iam_instance_profile.pas-blobstore.name
+    tas_blobstore_iam_instance_profile_name = aws_iam_instance_profile.tas-blobstore.name
 
     ssh_lb_security_group_id = aws_security_group.ssh_lb_sg.id
     ssh_lb_security_group_name = aws_security_group.ssh_lb_sg.name
