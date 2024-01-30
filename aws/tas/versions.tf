@@ -15,4 +15,12 @@ terraform {
     }
   }
   required_version = "~> 1.0"
+  backend "s3" {
+    bucket = "weien-tfstate"
+    key    = "sandbox-tas/terraform.tfstate"
+    region = "us-east-1"
+    assume_role = {
+      role_arn = "arn:aws:iam::963973327276:role/svc.pcf-user"
+    }
+  }
 }
