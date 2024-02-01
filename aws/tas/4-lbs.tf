@@ -20,11 +20,21 @@ resource "aws_lb_listener" "web-80" {
   }
 }
 
+data "aws_secretsmanager_secret" "cert-secret" {
+  provider = aws.plat-auto
+  arn      = var.https_listener_cert_secret_arn
+}
+
+data "aws_secretsmanager_secret_version" "cert-secret-version" {
+  provider  = aws.plat-auto
+  secret_id = data.aws_secretsmanager_secret.cert-secret.id
+}
+
 resource "aws_iam_server_certificate" "https-listener-cert" {
   name_prefix       = "${var.environment_name}-web-lb-https-listener-cert"
-  private_key       = file("${var.https_listener_cert_private_key_filename}")
-  certificate_body  = file("${var.https_listener_cert_body_filename}")
-  certificate_chain = file("${var.https_listener_cert_chain_filename}")
+  private_key       = jsondecode(data.aws_secretsmanager_secret_version.cert-secret-version.secret_string)["private_key"]
+  certificate_body  = jsondecode(data.aws_secretsmanager_secret_version.cert-secret-version.secret_string)["certificate_body"]
+  certificate_chain = jsondecode(data.aws_secretsmanager_secret_version.cert-secret-version.secret_string)["certificate_chain"]
 
   lifecycle {
     create_before_destroy = true

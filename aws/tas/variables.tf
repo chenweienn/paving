@@ -4,6 +4,12 @@ variable "environment_name" {
 
 variable "region" {
   type = string
+  description = "The AWS region to deploy TAS foundation"
+}
+
+variable "plat_auto_region" {
+  type = string
+  description = "The AWS region where Platform Automation is deployed"
 }
 
 variable "hosted_zone" {
@@ -74,6 +80,12 @@ variable "ops_manager_allowed_ips" {
 variable "https_listener_ssl_policy" {
   default     = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   description = "ALB HTTPS listener security policy. See https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html"
+  type        = string
+}
+
+variable "https_listener_cert_secret_arn" {
+  default     = ""
+  description = "The ARN of the secret stored in AWS Secret Manager, which contains private_key, server certificate and certficate signing chain to configure ALB HTTPS listener."
   type        = string
 }
 
