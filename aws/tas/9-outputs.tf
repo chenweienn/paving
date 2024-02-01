@@ -111,6 +111,12 @@ locals {
     tas_db_password = random_string.rds_password.result
     tas_db_ca_cert  = data.curl.rds_ca_cert.response
 
+    tas_db_secret   = {
+      tas_db_endpoint = aws_db_instance.tas_db.endpoint
+      tas_db_username = aws_db_instance.tas_db.username
+      tas_db_password = random_string.rds_password.result
+    }
+
     tas_db_security_group_id = aws_security_group.tas_db_sg.id
     tas_db_security_group_name = aws_security_group.tas_db_sg.name
 
@@ -124,4 +130,18 @@ locals {
 output "config" {
   value     = jsonencode(local.config)
   sensitive = true
+}
+
+# persist tas_db_secret in AWS Secret Manager
+
+resource "aws_secretsmanager_secret" "tas-db-secret" {
+  provider    = aws.plat-auto
+  name_prefix = "/concourse/sandbox/tas-db-credential-"
+  description = "TAS DB credential"
+}
+
+resource "aws_secretsmanager_secret_version" "tas-db-secret-version" {
+  provider      = aws.plat-auto
+  secret_id     = aws_secretsmanager_secret.tas-db-secret.id
+  secret_string = jsonencode(local.config.tas_db_secret)
 }
