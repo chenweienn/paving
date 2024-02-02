@@ -6,8 +6,11 @@ vpc_id_1 = "vpc-009c4092419f42ebe"
 tgw_id_1 = "tgw-02e586cd62a52ef8e"
 
 # TAS environment to connect with Platform Automation
-environment_name_2 = "tas-sandbox"
+environment_name_2 = "sbx-w"
 region_2 = "eu-north-1"
 tags_2 = { "created_by" = "Weien_Chen", "managed_by" = "Terraform", "Tanzu_Env" = "TAS_Sandbox" }
-vpc_id_2 = "vpc-0fea65110c59ecbe4"
-tgw_id_2 = "tgw-0cf6e76dd01f28e7b"
+vpc_id_2 = "vpc-003bfc7f5c4824635"
+tgw_id_2 = "tgw-05add233c6e024fa7"
+
+assume_role_arn = "arn:aws:iam::963973327276:role/svc.pcf-user"
+role_session_name = "pcf-user-role"
