@@ -21,7 +21,8 @@ locals {
 
     concourse_dns = aws_route53_record.concourse.name
 
-    pivnet_bucket_name = aws_s3_bucket.pivnet-bucket.bucket
+    pivnet_bucket_name   = aws_s3_bucket.pivnet-bucket.bucket
+    pivnet_bucket_region = aws_s3_bucket.pivnet-bucket.region
   }
 }
 

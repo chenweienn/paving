@@ -171,3 +171,14 @@ variable "tags" {
   type        = map(string)
 }
 
+variable "assume_role_arn" {
+  description = "The IAM role to assume by the authenticated IAM user"
+  default     = ""
+  type        = string
+}
+
+variable "role_session_name" {
+  description = "See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html"
+  default     = ""
+  type        = string
+}

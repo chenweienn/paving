@@ -1,5 +1,5 @@
 locals {
-  stable_config_opsmanager = {
+  terraform_result = {
     environment_name   = var.environment_name
     availability_zones = var.availability_zones
     region             = var.region
@@ -50,12 +50,58 @@ locals {
     #ssl_certificate = var.ssl_certificate
     #ssl_private_key = var.ssl_private_key
 
-    bosh_bucket                           = aws_s3_bucket.bosh-bucket.bucket
+    bosh_bucket_name                      = aws_s3_bucket.bosh-bucket.bucket
+    bosh_bucket_region                    = aws_s3_bucket.bosh-bucket.region
     vpc_s3_endpoint                       = replace(aws_vpc_endpoint.s3.dns_entry[0]["dns_name"],"*","bucket")
   }
 }
 
-output "stable_config_opsmanager" {
-  value     = jsonencode(local.stable_config_opsmanager)
+output "terraform_result" {
+  value     = jsonencode(local.terraform_result)
   sensitive = true
 }
+
+
+
+## persist secrets in AWS Secret Manager
+
+# pivnet_bucket_name
+
+resource "aws_secretsmanager_secret" "pivnet_bucket_name" {
+  name = "/concourse/pivnet_bucket_name"
+  description = "Name of the S3 bucket used to store downloaded products from Tanzu Network (pivnet)"
+}
+
+resource "aws_secretsmanager_secret_version" "pivnet_bucket_name_version" {
+  secret_id     = aws_secretsmanager_secret.pivnet_bucket_name.id
+  secret_string = aws_s3_bucket.pivnet-bucket.bucket
+}
+
+# pivnet_bucket_region
+
+resource "aws_secretsmanager_secret" "pivnet_bucket_region" {
+  name = "/concourse/pivnet_bucket_region"
+  description = "AWS region of the S3 bucket used to store downloaded products from Tanzu Network (pivnet)"
+}
+
+resource "aws_secretsmanager_secret_version" "pivnet_bucket_region_version" {
+  secret_id     = aws_secretsmanager_secret.pivnet_bucket_region.id
+  secret_string = aws_s3_bucket.pivnet-bucket.region
+}
+
+# plat_auto_vpc_s3_endpoint
+
+resource "aws_secretsmanager_secret" "plat_auto_vpc_s3_endpoint" {
+  name = "/concourse/plat_auto_vpc_s3_endpoint"
+  description = "VPC interface endpoint to access S3 bucket from Plat Auto VPC."
+}
+
+resource "aws_secretsmanager_secret_version" "plat_auto_vpc_s3_endpoint_version" {
+  secret_id     = aws_secretsmanager_secret.plat_auto_vpc_s3_endpoint.id
+  secret_string = "https://${local.terraform_result.vpc_s3_endpoint}"
+}
+
+
+
+
+
