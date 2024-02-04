@@ -1,13 +1,14 @@
-# the bucket concumed as BOSH director blobstore
-resource "aws_s3_bucket" "bosh-bucket" {
-  bucket_prefix = "${var.environment_name}-bosh-bucket-"
-}
 
-# the bucket consumed by platform automation pipelines to cache Tanzu Network (pivnet) resources
+## pivnet-bucket: the bucket consumed by platform automation pipelines to cache Tanzu Network (pivnet) resources
 resource "aws_s3_bucket" "pivnet-bucket" {
   bucket_prefix = "${var.environment_name}-pivnet-bucket-"
 }
 
+
+## bosh-bucket: the bucket concumed as BOSH director blobstore
+resource "aws_s3_bucket" "bosh-bucket" {
+  bucket_prefix = "${var.environment_name}-bosh-bucket-"
+}
 
 resource "aws_s3_bucket_versioning" "bosh-bucket" {
   bucket = aws_s3_bucket.bosh-bucket.id
@@ -37,4 +38,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bosh-bucket-encry
   }
 }
 
-
+## state-bucket: the bucket consumed by Concourse pipelines to store
+#  - terraform.tfstate when paving IaaS
+#  - state-((foundation)).yml used by om vm-lifecycle commands when managing Ops Manager
+# TBD
