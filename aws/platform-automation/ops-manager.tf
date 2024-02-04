@@ -25,7 +25,8 @@ data "aws_iam_policy_document" "ops-manager" {
     effect  = "Allow"
     actions = ["iam:PassRole"]
     resources = [
-      aws_iam_role.ops-manager.arn
+      aws_iam_role.ops-manager.arn,
+      "arn:aws:iam::963973327276:role/sbx-w-ops-manager-role"
     ]
   }
 
